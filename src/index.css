@@ -42,23 +42,59 @@ body {
     #fffaf4;
 }
 
-.hero-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(255,255,255,.35);
-  border-radius: inherit;
-  pointer-events: none;
+.hero-food-image {
+  object-position: 62% 58%;
+  animation: hero-breathe 12s ease-in-out infinite alternate;
 }
 
-.hero-card img {
-  transform: scale(1.015);
-  animation: hero-breathe 8s ease-in-out infinite alternate;
+.hero-cover-overlay {
+  background:
+    linear-gradient(180deg, rgba(8, 6, 5, .58) 0%, rgba(9, 6, 4, .91) 43%, rgba(12, 7, 4, .22) 100%),
+    linear-gradient(90deg, rgba(6, 5, 4, .32), transparent 70%);
 }
+
+.hero-logo-frame {
+  background: linear-gradient(145deg, rgba(255,255,255,.99), rgba(255,246,230,.98));
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px rgba(248, 185, 66, .65), 0 13px 30px rgba(0,0,0,.35);
+}
+
+.hero-action {
+  min-height: 49px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  font-size: 11px;
+  font-weight: 800;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.hero-action-primary {
+  background: linear-gradient(135deg, #ffdf87, #efad35);
+  color: #241109;
+  box-shadow: 0 8px 22px rgba(235, 157, 36, .24);
+}
+
+.hero-action-secondary {
+  color: white;
+  background: rgba(26, 20, 15, .55);
+  border: 1px solid rgba(255, 226, 162, .36);
+  backdrop-filter: blur(8px);
+}
+
+.hero-action:hover { transform: translateY(-2px); }
+
+.birthday-strip {
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.birthday-strip:hover { transform: translateY(-2px); }
 
 @keyframes hero-breathe {
-  from { transform: scale(1.015) translateX(0); }
-  to { transform: scale(1.07) translateX(-1.5%); }
+  from { transform: scale(1.01); }
+  to { transform: scale(1.08); }
 }
 
 .delivery-card {

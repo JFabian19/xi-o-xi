@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Utensils, Facebook, MapPin, Loader2, Gift, Star, Flame, Truck, Sparkles, Clock3 } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Utensils, Facebook, MapPin, Loader2, Gift, Star, Flame, Truck, Sparkles, Clock3, Phone, ArrowDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { fetchSheetData, submitSheetData, SheetDish, SheetCategory, SHEET_ID } from './services/googleSheets';
 import { DEFAULT_MENU_DATA } from './data/menuData';
@@ -303,35 +303,49 @@ export default function App() {
         </div>
       </div>
 
-      <div className="px-5 pt-4">
-        <motion.button 
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.95 }}
-          animate={{ 
-            boxShadow: ["0px 0px 0px 0px rgba(245,158,11,0.6)", "0px 0px 20px 8px rgba(245,158,11,0)", "0px 0px 0px 0px rgba(245,158,11,0)"] 
-          }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          onClick={() => setShowBirthdayForm(true)}
-          className="w-full bg-gradient-to-r from-yellow-500 via-secondary to-amber-500 text-white py-3 px-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-[10px] sm:text-[11px] uppercase tracking-wide border border-yellow-400 relative overflow-hidden group text-center"
-        >
-          <div className="absolute inset-0 shimmer opacity-30 mix-blend-overlay"></div>
-          <Gift size={18} className="animate-bounce shrink-0" />
-          <span>🍗 ¡Celebra tu cumpleaños con nosotros! <span className="text-yellow-100 font-black underline">Regístrate aquí</span> y llévate una cortesía especial en tu día. 🎁✨</span>
-        </motion.button>
-      </div>
-
-      <div className="px-5 pt-4 pb-3">
-        <div className="hero-card relative w-full rounded-[2rem] overflow-hidden shadow-xl shadow-primary/15 aspect-[1.78/1] bg-primary">
-          <img src="/banner.png" alt="Carta delivery de XI O XI" className="absolute inset-0 h-full w-full object-cover" />
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent pointer-events-none" />
-          <div className="absolute top-3 right-3 bg-[#fff8e8] text-primary rounded-full px-3 py-1.5 flex items-center gap-1.5 text-[9px] font-black uppercase tracking-wider shadow-lg">
-            <Flame size={13} className="text-secondary fill-secondary" /> Recién salido
+      <section className="hero-cover relative min-h-[536px] overflow-hidden bg-[#100b08] px-5 pt-5 pb-6 flex flex-col">
+        <img src="/hero-woodfire.png" alt="Pollo a la leña y papas nativas XI O XI" className="hero-food-image absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 hero-cover-overlay pointer-events-none" />
+        <div className="relative z-10 flex flex-col h-full flex-1">
+          <div className="flex items-center justify-center gap-2 text-[#ffd36b] font-slogan font-black uppercase tracking-[0.2em] text-[9px]">
+            <Flame size={13} className="fill-[#ffd36b]" /> Carta digital
           </div>
-          <div className="absolute left-4 bottom-3 text-white drop-shadow-md">
-            <p className="font-slogan text-[9px] font-bold uppercase tracking-[0.2em]">El sabor que reúne</p>
-            <p className="font-title text-2xl leading-none">la mesa.</p>
+
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="hero-logo-frame mt-5 mx-auto w-[82%] max-w-[300px] h-[126px] rounded-[1.55rem] flex items-center justify-center px-6">
+            <img src={LOGO_PATH} alt={RESTAURANTE_NAME} className="max-h-[95px] max-w-full object-contain" />
+          </motion.div>
+
+          <div className="mt-7 text-center">
+            <p className="font-title text-[40px] leading-[0.96] tracking-tight text-white uppercase">El fuego<br />en tu mesa</p>
+            <p className="font-title text-[35px] leading-none tracking-tight text-[#f8b942] uppercase italic">con XI O XI</p>
+            <p className="mt-4 text-[12px] text-[#fff4de] leading-relaxed max-w-[265px] mx-auto">Pollo a la leña, papas nativas y antojos que llegan directito a ti.</p>
+          </div>
+
+          <div className="mt-auto grid grid-cols-2 gap-2.5 pt-5">
+            <motion.button whileTap={{ scale: 0.96 }} onClick={() => categories[0] && scrollToCategory(categories[0].id)} className="hero-action hero-action-primary">
+              Ver la carta <ArrowDown size={16} />
+            </motion.button>
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola XI O XI, quisiera hacer un pedido.')}`} target="_blank" rel="noopener noreferrer" className="hero-action hero-action-secondary">
+              <Phone size={15} /> WhatsApp
+            </a>
           </div>
         </div>
+      </section>
+
+      <div className="px-5 -mt-4 relative z-20">
+        <motion.button
+          whileHover={{ scale: 1.015 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => setShowBirthdayForm(true)}
+          className="birthday-strip w-full bg-[#fffaf2] py-3 px-3.5 rounded-2xl flex items-center gap-3 text-left shadow-xl shadow-black/15 border border-white"
+        >
+          <span className="w-10 h-10 shrink-0 rounded-xl bg-[#ffdc89] text-[#8a3a0d] grid place-items-center"><Gift size={20} /></span>
+          <span className="flex-1 min-w-0">
+            <span className="block text-[12px] font-black text-dark uppercase">¿Estás de cumpleaños?</span>
+            <span className="block text-[10px] text-gray-500 mt-0.5">Regístrate y celebra con nosotros</span>
+          </span>
+          <ChevronRight size={18} className="text-secondary" />
+        </motion.button>
       </div>
 
       {/* Información de Delivery y Pagos de la Carta */}

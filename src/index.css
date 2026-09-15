@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lilita+One&family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fredoka:wght@400;500;600;700&family=Lilita+One&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
   /* TIPOGRAFÍAS DE XI O XI */
-  --font-sans: "Plus Jakarta Sans", "Nunito", system-ui, -apple-system, sans-serif;
+  --font-sans: "DM Sans", "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --font-title: "Lilita One", cursive, sans-serif;       /* Titulares de impacto como CARTA DELIVERY */
   --font-category: "Fredoka", sans-serif;               /* Tipografía para Categorías y Subtítulos */
   --font-dish: "Plus Jakarta Sans", sans-serif;         /* Tipografía para Platos y Precios */
@@ -22,10 +22,116 @@
 }
 
 body {
-  background-color: var(--color-light);
+  background:
+    radial-gradient(circle at top left, rgba(243, 112, 33, .13), transparent 28rem),
+    #f4eee5;
   color: var(--color-dark);
   -webkit-font-smoothing: antialiased;
   font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-secondary);
+  color: white;
+}
+
+.menu-shell {
+  background:
+    radial-gradient(circle at 100% 18%, rgba(255, 184, 0, .10), transparent 15rem),
+    radial-gradient(circle at 0 55%, rgba(211, 19, 27, .045), transparent 19rem),
+    #fffaf4;
+}
+
+.hero-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.hero-card img {
+  transform: scale(1.015);
+  animation: hero-breathe 8s ease-in-out infinite alternate;
+}
+
+@keyframes hero-breathe {
+  from { transform: scale(1.015) translateX(0); }
+  to { transform: scale(1.07) translateX(-1.5%); }
+}
+
+.delivery-card {
+  background: linear-gradient(115deg, #bd1018 0%, #dd2630 55%, #f37021 150%);
+  position: relative;
+  overflow: hidden;
+}
+
+.delivery-card::after {
+  content: 'XI';
+  font-family: var(--font-title);
+  font-size: 7rem;
+  line-height: 1;
+  position: absolute;
+  right: -10px;
+  top: -28px;
+  color: rgba(255,255,255,.07);
+  pointer-events: none;
+}
+
+.menu-intro {
+  position: relative;
+}
+
+.menu-intro::after {
+  content: '';
+  position: absolute;
+  right: 6px;
+  top: 12px;
+  width: 65px;
+  height: 28px;
+  border-top: 2px solid rgba(243,112,33,.38);
+  border-radius: 50%;
+  transform: rotate(-12deg);
+}
+
+.category-symbol {
+  color: var(--color-secondary);
+  font-size: 1rem;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  background: #fff0df;
+  border-radius: 8px;
+}
+
+.dish-card {
+  border: 1px solid rgba(224, 83, 35, .12);
+  border-radius: 1.45rem;
+  box-shadow: 0 8px 20px rgba(95, 44, 18, .065);
+  transition: box-shadow .25s ease, border-color .25s ease;
+}
+
+.dish-card:hover {
+  box-shadow: 0 15px 30px rgba(164, 43, 15, .14);
+  border-color: rgba(211, 19, 27, .3);
+}
+
+.dish-banner {
+  background:
+    linear-gradient(135deg, rgba(255, 207, 130, .55), rgba(255, 246, 232, .9)),
+    #fff5e8;
+  border-bottom: 1px dashed rgba(211,19,27,.16);
+}
+
+.dish-card:nth-child(3n + 2) .dish-banner {
+  background: linear-gradient(135deg, rgba(255, 220, 206, .8), rgba(255, 246, 239, .9));
+}
+
+.dish-card:nth-child(3n) .dish-banner {
+  background: linear-gradient(135deg, rgba(255, 234, 170, .72), rgba(255, 249, 229, .95));
 }
 
 .glass {
@@ -92,4 +198,12 @@ body {
   height: 3px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
 }

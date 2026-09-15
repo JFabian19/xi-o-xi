@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Utensils, Facebook, MapPin, Loader2, Gift, Star } from 'lucide-react';
+import { ShoppingBag, Plus, Minus, ChevronRight, X, Trash2, Utensils, Facebook, MapPin, Loader2, Gift, Star, Flame, Truck, Sparkles, Clock3 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { fetchSheetData, submitSheetData, SheetDish, SheetCategory, SHEET_ID } from './services/googleSheets';
 import { DEFAULT_MENU_DATA } from './data/menuData';
@@ -14,6 +14,7 @@ const FACEBOOK_URL = "https://facebook.com/xioxi.pollosalalena";
 const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Av.+Huachipa+Mz.+D+Lote+2A";
 const LOGO_PATH = "/logo.png";
 const MARQUEE_TEXT = "🔥 ¡BIENVENIDOS A XI O XI POLLOS A LA LEÑA! • DELICIOSAS PAPAS NATIVAS • PEDIDOS DELIVERY: 987037010 / 943841509 • YAPE DISPONIBLE • ";
+const CATEGORY_MARKS = ['★', '♨', '✦', '♥', '◎', '✺', '◌'];
 // ==========================================
 
 // Mapa de imágenes locales por defecto para platos conocidos (vacío por defecto para la plantilla)
@@ -243,13 +244,13 @@ export default function App() {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen relative shadow-2xl overflow-hidden flex flex-col font-sans">
-      <header className="sticky top-0 bg-white/95 backdrop-blur-md z-50 px-4 py-3 flex justify-between items-center border-b border-gray-100 shadow-xs">
+    <div className="menu-shell max-w-md mx-auto min-h-screen relative shadow-2xl overflow-hidden flex flex-col font-sans">
+      <header className="sticky top-0 bg-[#fffaf2]/95 backdrop-blur-xl z-50 px-4 py-3 flex justify-between items-center border-b border-orange-100/80">
         <div className="flex items-center gap-3">
           <img
             src={LOGO_PATH}
             alt={RESTAURANTE_NAME}
-            className="h-12 w-auto object-contain drop-shadow-xs"
+            className="h-12 w-auto object-contain drop-shadow-sm"
           />
           <div className="flex flex-col items-start">
             <h1 className="font-title text-[24px] text-primary leading-none tracking-wide">{RESTAURANTE_NAME}</h1>
@@ -263,7 +264,7 @@ export default function App() {
               target="_blank"
               rel="noopener noreferrer"
               whileTap={{ scale: 0.95 }}
-              className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary cursor-pointer"
+              className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary cursor-pointer border border-primary/10 shadow-sm"
             >
               <Facebook size={20} />
             </motion.a>
@@ -274,7 +275,7 @@ export default function App() {
               target="_blank"
               rel="noopener noreferrer"
               whileTap={{ scale: 0.95 }}
-              className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary cursor-pointer"
+              className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary cursor-pointer border border-primary/10 shadow-sm"
             >
               <MapPin size={20} />
             </motion.a>
@@ -282,9 +283,9 @@ export default function App() {
           <motion.div
             onClick={() => cartCount > 0 && setShowSummary(true)}
             whileTap={{ scale: 0.95 }}
-            className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center relative cursor-pointer"
+            className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center relative cursor-pointer shadow-lg shadow-primary/25"
           >
-            <ShoppingBag size={20} className="text-primary" />
+            <ShoppingBag size={20} />
             {cartCount > 0 && (
               <span className="absolute -top-0.5 -right-0.5 min-w-[20px] h-5 bg-secondary text-white rounded-full text-[10px] font-bold flex items-center justify-center px-1">
                 {cartCount}
@@ -319,42 +320,45 @@ export default function App() {
         </motion.button>
       </div>
 
-      <div className="px-5 pt-4 pb-2">
-        <div className="relative w-full rounded-3xl overflow-hidden shadow-sm aspect-[2/1] bg-gradient-to-br from-primary/10 to-secondary/15 flex flex-col items-center justify-center text-center p-4 border border-dashed border-primary/20">
-          <p className="font-dish font-bold text-primary text-sm uppercase tracking-wider">
-            aca va a imagen
-          </p>
+      <div className="px-5 pt-4 pb-3">
+        <div className="hero-card relative w-full rounded-[2rem] overflow-hidden shadow-xl shadow-primary/15 aspect-[1.78/1] bg-primary">
+          <img src="/banner.png" alt="Carta delivery de XI O XI" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent pointer-events-none" />
+          <div className="absolute top-3 right-3 bg-[#fff8e8] text-primary rounded-full px-3 py-1.5 flex items-center gap-1.5 text-[9px] font-black uppercase tracking-wider shadow-lg">
+            <Flame size={13} className="text-secondary fill-secondary" /> Recién salido
+          </div>
+          <div className="absolute left-4 bottom-3 text-white drop-shadow-md">
+            <p className="font-slogan text-[9px] font-bold uppercase tracking-[0.2em]">El sabor que reúne</p>
+            <p className="font-title text-2xl leading-none">la mesa.</p>
+          </div>
         </div>
       </div>
 
       {/* Información de Delivery y Pagos de la Carta */}
-      <div className="px-5 pb-1">
-        <div className="bg-amber-50/90 border border-amber-200/80 rounded-2xl p-3 flex flex-col gap-1.5 shadow-xs">
-          <div className="flex items-center justify-between text-[11px] font-bold text-dark">
-            <span className="flex items-center gap-1 text-primary">
-              <span>🛵</span> Delivery: 987037010 / 943841509
-            </span>
-            <span className="bg-secondary/15 text-secondary px-2 py-0.5 rounded-full font-bold text-[10px]">
-              Efectivo o Yape
-            </span>
+      <div className="px-5 pb-2">
+        <div className="delivery-card rounded-2xl p-3.5 grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 shadow-lg shadow-orange-100/40">
+          <div className="flex items-center gap-2 text-[11px] font-bold text-white">
+            <span className="w-7 h-7 bg-white/15 rounded-lg grid place-items-center"><Truck size={16} /></span>
+            <span>Delivery: 987037010<br />943841509</span>
           </div>
-          <div className="flex items-center justify-between text-[10px] text-gray-600 border-t border-amber-200/50 pt-1.5">
-            <span>📍 Av. Huachipa Mz. D Lote 2A</span>
-            <span className="font-medium text-amber-900">* Min. delivery S/. 30</span>
+          <span className="self-center bg-[#ffd36b] text-[#6b2904] px-2.5 py-1 rounded-full font-black text-[9px] uppercase">Yape & efectivo</span>
+          <div className="col-span-2 flex items-center justify-between text-[9px] text-white/85 border-t border-white/15 pt-2">
+            <span className="flex items-center gap-1"><MapPin size={12} /> Av. Huachipa Mz. D Lote 2A</span>
+            <span className="font-bold"><Clock3 size={11} className="inline mr-1" />Min. S/. 30</span>
           </div>
         </div>
       </div>
 
-      <div className="px-5 py-3 overflow-x-auto no-scrollbar">
+      <div className="px-5 pt-3 pb-4 overflow-x-auto no-scrollbar">
         <div className="flex gap-2 w-max">
           {categories.map(cat => (
             <button
               key={cat.id}
               onClick={() => scrollToCategory(cat.id)}
-              className={`px-4 py-2 rounded-full text-[11px] font-category font-semibold whitespace-nowrap transition-all duration-200 border
+              className={`px-4 py-2 rounded-full text-[11px] font-category font-bold whitespace-nowrap transition-all duration-200 border
                 ${activeCategory === cat.id
-                  ? 'bg-primary text-white border-primary shadow-md shadow-primary/20'
-                  : 'bg-white text-dark border-gray-200 hover:border-primary/40 hover:text-primary'
+                  ? 'bg-primary text-white border-primary shadow-md shadow-primary/25 -translate-y-0.5'
+                  : 'bg-[#fffaf2] text-dark border-orange-100 hover:border-primary/40 hover:text-primary'
                 }`}
             >
               {cat.nombre}
@@ -364,48 +368,63 @@ export default function App() {
       </div>
 
       <main className="flex-1 overflow-y-auto pb-32 px-5">
-        {categories.map(cat => (
+        <div className="menu-intro mb-7 px-1">
+          <div className="flex items-center gap-2 text-secondary font-slogan font-bold uppercase tracking-[0.18em] text-[9px] mb-1"><Sparkles size={13} /> Nuestra carta</div>
+          <h2 className="font-title text-[29px] text-dark leading-none">Elige tu antojo</h2>
+          <p className="text-[11px] text-gray-500 mt-2">Sabores hechos al fuego, pensados para compartir.</p>
+        </div>
+        {categories.map((cat, categoryIndex) => (
           <section key={cat.id} id={`cat-${cat.id}`} className="mb-10 scroll-mt-28">
-            <div className="mb-5 pt-2">
-              <div className="flex items-center gap-2 mb-1">
-                <Utensils className="text-primary wave-icon" size={22} />
-                <h3 className="font-category font-semibold text-primary text-[26px] leading-none tracking-wide category-underline">
+            <div className="mb-4 pt-2 flex items-end justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="category-symbol">{CATEGORY_MARKS[categoryIndex % CATEGORY_MARKS.length]}</span>
+                  <h3 className="font-category font-bold text-primary text-[26px] leading-none tracking-wide category-underline">
                   {cat.nombre}
-                </h3>
+                  </h3>
+                </div>
+                <p className="text-[9px] text-gray-400 uppercase font-bold tracking-widest ml-8">{cat.items.length} opciones para ti</p>
               </div>
+              <Utensils className="text-secondary/35 wave-icon mb-1" size={20} />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3.5">
               {cat.items.map((dish, idx) => (
                 <motion.div
                   key={idx}
-                  whileHover={{ y: -4 }}
-                  className="bg-white rounded-[2rem] overflow-hidden flex flex-col shadow-sm border border-gray-100 hover:border-primary/30 hover:shadow-md transition-all duration-200"
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.32, delay: Math.min(idx * 0.04, 0.2) }}
+                  whileHover={{ y: -5 }}
+                  className="dish-card overflow-hidden flex flex-col"
                 >
-                  <div className="bg-primary/5 aspect-square flex items-center justify-center relative overflow-hidden p-4 border-b border-gray-100">
-                    <span className="font-dish font-bold text-[11px] text-primary uppercase tracking-wider text-center">
-                      aca va a imagen
-                    </span>
+                  <div className="dish-banner relative overflow-hidden p-3.5 min-h-[72px] flex items-end">
+                    <span className="absolute -right-2 -top-7 font-title text-[76px] leading-none text-primary/[0.07] select-none">{String(idx + 1).padStart(2, '0')}</span>
+                    <div className="relative flex items-center gap-1.5">
+                      <span className="w-5 h-5 rounded-full bg-primary text-white grid place-items-center text-[9px] font-black">{CATEGORY_MARKS[categoryIndex % CATEGORY_MARKS.length]}</span>
+                      <span className="font-slogan text-[8px] text-primary uppercase font-black tracking-[0.14em]">XI O XI favorito</span>
+                    </div>
                   </div>
                   
-                  <div className="p-4 flex flex-col flex-1">
-                    <h4 className="font-dish font-bold text-dark text-[13px] leading-tight mb-1">
+                  <div className="p-3.5 pt-3 flex flex-col flex-1 bg-white">
+                    <h4 className="font-dish font-extrabold text-dark text-[13px] leading-[1.15] mb-1.5">
                       {dish.nombre}
                     </h4>
                     {dish.descripcion && (
-                      <p className="text-[10px] text-gray-400 leading-tight mb-2 line-clamp-3">
+                      <p className="text-[10px] text-gray-500 leading-[1.35] mb-2 line-clamp-3">
                         {dish.descripcion}
                       </p>
                     )}
                     <div className="flex-1"></div>
                     <div className="flex items-center justify-between mt-2">
-                      <span className="font-dish font-bold text-primary text-[16px] whitespace-nowrap">
+                      <span className="font-dish font-extrabold text-primary text-[16px] whitespace-nowrap">
                         {dish.precio}
                       </span>
                       <motion.button
                         whileTap={{ scale: 0.8 }}
                         onClick={() => addToCart(dish)}
-                        className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary transition-colors duration-200 shrink-0"
+                        className="w-8 h-8 bg-primary text-white rounded-xl flex items-center justify-center shadow-md shadow-primary/20 transition-colors duration-200 shrink-0 hover:bg-secondary"
                       >
                         <Plus size={16} strokeWidth={3} />
                       </motion.button>

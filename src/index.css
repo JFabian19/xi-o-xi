@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lilita+One&family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* TIPOGRAFÍAS DE XI O XI */
+  --font-sans: "Plus Jakarta Sans", "Nunito", system-ui, -apple-system, sans-serif;
+  --font-title: "Lilita One", cursive, sans-serif;       /* Titulares de impacto como CARTA DELIVERY */
+  --font-category: "Fredoka", sans-serif;               /* Tipografía para Categorías y Subtítulos */
+  --font-dish: "Plus Jakarta Sans", sans-serif;         /* Tipografía para Platos y Precios */
+  --font-slogan: "Fredoka", sans-serif;                 /* Tipografía para Eslogans y Marquee */
+  
+  /* PALETA DE COLORES OFICIAL DE XI O XI */
+  --color-primary: #D3131B;      /* Rojo brasas característico de Xi o Xi */
+  --color-secondary: #F37021;    /* Naranja vibrante de las letras XI */
+  --color-accent: #FFB800;       /* Amarillo dorado de las papas nativas */
+  --color-dark: #231F20;         /* Texto oscuro carbón */
+  --color-light: #FFFDF8;        /* Fondo crema cálido como la carta */
+  
+  --shadow-glass: 0 8px 32px 0 rgba(211, 19, 27, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.96);
+  --glass-border: rgba(255, 255, 255, 0.6);
+}
+
+body {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-sans);
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+/* Custom scrollbar hide */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Wave decoration for sections */
+@keyframes wave {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(2deg); }
+}
+
+.wave-icon {
+  animation: wave 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Category header underline animation */
+.category-underline {
+  position: relative;
+}
+
+.category-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: 2px;
+}
